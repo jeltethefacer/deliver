@@ -13,37 +13,6 @@ app.get("/api/orders/get", (req, res) => {
   console.log(`send orders`);
 });
 
-app.get("/test", (req, res) => {
-  const { Pool, Client } = require("pg");
-
-  const pool = new Pool({
-    user: "postgres",
-    host: "localhost",
-    database: "test",
-    password: "root",
-    port: 5432
-  });
-
-  pool.query("SELECT * FROM users", (err, res) => {
-    console.log(err, res);
-    pool.end();
-  });
-
-  const client = new Client({
-    user: "postgres",
-    host: "localhost",
-    database: "test",
-    password: "root",
-    port: 5432
-  });
-  client.connect();
-
-  client.query("SELECT * FROM users", (err, res) => {
-    console.log(err, res);
-    client.end();
-  });
-});
-
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
 app.get("*", (req, res) => {
