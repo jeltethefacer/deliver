@@ -1,26 +1,30 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { changeWord } from "../actions";
 
 class App extends Component {
-  // Initialize state
-  state = { orders: [] };
-
-  // Fetch passwords after first mount
   componentDidMount() {
-    this.getPasswords();
+    this.props.wordChange("jelte is cool");
   }
-
-  getPasswords = () => {
-    // Get the passwords and store them in state
-    fetch("/api/orders/get")
-      .then(res => res.json())
-      .then(orders => this.setState({ orders }));
-  };
-
   render() {
-    const { orders } = this.state;
-
-    return <div className="App">{orders}</div>;
+    return <div>{this.props.word}</div>;
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    word: state.word
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    wordChange: word => {
+      dispatch(changeWord(word));
+    }
+  };
+};
+
+const VisibleTodoList = connect(mapStateToProps, mapDispatchToProps)(App);
+
+export default VisibleTodoList;
