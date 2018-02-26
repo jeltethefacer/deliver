@@ -1,27 +1,43 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { changeWord } from "../actions";
+import { checkIfLoggedIn } from "../actions";
 
 class App extends Component {
   componentDidMount() {
-    this.props.wordChange("jelte is cool");
+    this.props.checkIfLoggedIn();
   }
+
   render() {
-    return <div>{this.props.word}</div>;
+    if (this.props.front_name) {
+      return (
+        <div>
+          first name: {this.props.front_name}
+          <br />
+          email: {this.props.email}
+          <br />
+          <a href="/api/logout">logout</a>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <a href="/login">login</a>
+        </div>
+      );
+    }
   }
 }
 
 const mapStateToProps = state => {
   return {
-    word: state.word
+    front_name: state.user.front_name,
+    email: state.user.email
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    wordChange: word => {
-      dispatch(changeWord(word));
-    }
+    checkIfLoggedIn: () => dispatch(checkIfLoggedIn())
   };
 };
 

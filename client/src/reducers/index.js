@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
-import word from "./word";
+import user from "./word";
 const deliverApp = combineReducers({
-  word
+  user
 });
 export default deliverApp;

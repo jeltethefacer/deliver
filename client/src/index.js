@@ -5,9 +5,10 @@ import Login from "./components/login";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import { Provider } from "react-redux";
-import { createStore } from "redux";
+import { createStore, applyMiddleware } from "redux";
+import thunkMiddleware from "redux-thunk";
 import deliverApp from "./reducers";
-let store = createStore(deliverApp);
+let store = createStore(deliverApp, applyMiddleware(thunkMiddleware));
 
 ReactDOM.render(
   <Provider store={store}>
