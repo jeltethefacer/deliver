@@ -78,7 +78,7 @@ class Register extends Component {
       this.props.register(
         this.state.valueFirstName,
         this.state.valueLastName,
-        this.state.valueEmail,
+        this.state.valueEmail.toLowerCase(),
         this.state.valuePassword
       );
     }

@@ -29,7 +29,10 @@ class Login extends Component {
   }
 
   handleSubmit(event) {
-    this.props.login(this.state.valueEmail, this.state.valuePassword);
+    this.props.login(
+      this.state.valueEmail.toLowerCase(),
+      this.state.valuePassword
+    );
     this.props.history.push("/");
     event.preventDefault();
   }
