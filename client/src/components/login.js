@@ -33,15 +33,25 @@ class Login extends Component {
       this.state.valueEmail.toLowerCase(),
       this.state.valuePassword
     );
-    this.props.history.push("/");
     event.preventDefault();
   }
 
   render() {
+    let warning;
     if (this.props.loggedIn) {
       return <Redirect to="/" />;
-    } else {
-      return (
+    }
+    if (this.props.loginStatus === 2) {
+      warning = (
+        <div className="alert alert-danger">
+          <strong>waarschuwing!</strong> het wachtwoord of emailadres kloppen
+          niet
+        </div>
+      );
+    }
+    return (
+      <div>
+        {warning}
         <form onSubmit={this.handleSubmit}>
           <label>
             email:
@@ -61,14 +71,15 @@ class Login extends Component {
           </label>
           <input type="submit" value="Submit" />
         </form>
-      );
-    }
+      </div>
+    );
   }
 }
 
 const mapStateToProps = state => {
   return {
-    loggedIn: state.user.loggedIn
+    loggedIn: state.user.loggedIn,
+    loginStatus: state.user.loginStatus
   };
 };
 

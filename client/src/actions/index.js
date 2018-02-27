@@ -3,6 +3,7 @@ export const LOGIN_SUCCES = "LOGIN_SUCCES";
 export const LOGIN_FAILED = "LOGIN_FAILED";
 export const REGISTER_SUCCES = "REGISTER_SUCCES";
 export const REGISTER_FAILED = "REGISTER_FAILED";
+export const NO_LOGIN = "NO_LOGIN";
 export function loginSucces(front_name, last_name, email) {
   return {
     type: LOGIN_SUCCES,
@@ -15,6 +16,12 @@ export function loginSucces(front_name, last_name, email) {
 export function loginFailed() {
   return {
     type: LOGIN_FAILED
+  };
+}
+
+export function noLogin() {
+  return {
+    type: NO_LOGIN
   };
 }
 
@@ -38,6 +45,7 @@ export function login(email, password) {
         password: password
       })
       .then(response => {
+        console.log(response.status);
         if (response.status === 200) {
           dispatch(
             loginSucces(
@@ -46,10 +54,9 @@ export function login(email, password) {
               response.data.email
             )
           );
-        } else {
-          loginFailed();
         }
-      });
+      })
+      .catch(error => dispatch(loginFailed()));
   };
 }
 
@@ -66,26 +73,33 @@ export function register(frontName, lastName, email, password) {
         if (response.status === 200) {
           dispatch(registerSucces());
         } else {
+          console.log("working");
           dispatch(registerFailed());
         }
+      })
+      .catch(error => {
+        dispatch(registerFailed());
       });
   };
 }
 
 export function checkIfLoggedIn() {
   return function(dispatch) {
-    return axios.get("/api/user").then(response => {
-      if (response.status === 200) {
-        dispatch(
-          loginSucces(
-            response.data.front_name,
-            response.data.last_name,
-            response.data.email
-          )
-        );
-      } else {
-        loginFailed();
-      }
-    });
+    return axios
+      .get("/api/user")
+      .then(response => {
+        if (response.status === 200) {
+          dispatch(
+            loginSucces(
+              response.data.front_name,
+              response.data.last_name,
+              response.data.email
+            )
+          );
+        }
+      })
+      .catch(error => {
+        dispatch(noLogin());
+      });
   };
 }

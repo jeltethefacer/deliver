@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { checkIfLoggedIn } from "../actions";
 
@@ -15,15 +16,15 @@ class App extends Component {
           <br />
           email: {this.props.email}
           <br />
-          <a href="/api/logout">logout</a>
+          <Link to="/api/logout">logout</Link>
         </div>
       );
     } else {
       return (
         <div>
-          <a href="/login">login</a>
+          <Link to="/login">login</Link>
           <br />
-          <a href="/register">register</a>
+          <Link to="/register">register</Link>
         </div>
       );
     }
