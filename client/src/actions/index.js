@@ -4,6 +4,7 @@ export const LOGIN_FAILED = "LOGIN_FAILED";
 export const REGISTER_SUCCES = "REGISTER_SUCCES";
 export const REGISTER_FAILED = "REGISTER_FAILED";
 export const NO_LOGIN = "NO_LOGIN";
+export const LOGOUT_SUCCES = "LOGOUT_SUCCES";
 export function loginSucces(front_name, last_name, email) {
   return {
     type: LOGIN_SUCCES,
@@ -37,6 +38,12 @@ export function registerFailed() {
   };
 }
 
+export function logoutSucces() {
+  return {
+    type: LOGOUT_SUCCES
+  };
+}
+
 export function login(email, password) {
   return function(dispatch) {
     return axios
@@ -45,7 +52,6 @@ export function login(email, password) {
         password: password
       })
       .then(response => {
-        console.log(response.status);
         if (response.status === 200) {
           dispatch(
             loginSucces(
@@ -73,7 +79,6 @@ export function register(frontName, lastName, email, password) {
         if (response.status === 200) {
           dispatch(registerSucces());
         } else {
-          console.log("working");
           dispatch(registerFailed());
         }
       })
@@ -101,5 +106,13 @@ export function checkIfLoggedIn() {
       .catch(error => {
         dispatch(noLogin());
       });
+  };
+}
+
+export function logout() {
+  return function(dispatch) {
+    return axios.get("/api/logout").then(response => {
+      dispatch(logoutSucces());
+    });
   };
 }

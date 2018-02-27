@@ -31,7 +31,8 @@ module.exports = function(app) {
 
   app.get("/api/logout", (req, res) => {
     req.session.destroy();
-    res.redirect("/");
+    console.log("loged out");
+    res.sendStatus(200);
   });
   app.get("/api/user", (req, res) => {
     if (req.session.user) {

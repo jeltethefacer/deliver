@@ -6,7 +6,6 @@ import { register, checkIfLoggedIn } from "../actions";
 class Register extends Component {
   componentDidMount() {
     this.props.checkIfLoggedIn();
-    console.log(this.props.registerStatus);
   }
 
   constructor(props) {

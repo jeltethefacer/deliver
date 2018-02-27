@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import Home from "./components/home";
 import Login from "./components/login";
 import Register from "./components/register";
+import Logout from "./components/logout";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import { Provider } from "react-redux";
@@ -18,6 +19,7 @@ ReactDOM.render(
         <Route exact path="/" component={Home} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={Register} />
+        <Route exact path="/logout" component={Logout} />
       </Switch>
     </Router>
   </Provider>,

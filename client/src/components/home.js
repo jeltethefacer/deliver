@@ -16,7 +16,7 @@ class App extends Component {
           <br />
           email: {this.props.email}
           <br />
-          <Link to="/api/logout">logout</Link>
+          <Link to="/logout">logout</Link>
         </div>
       );
     } else {

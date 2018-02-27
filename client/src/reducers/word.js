@@ -1,4 +1,4 @@
-import { LOGIN_SUCCES, LOGIN_FAILED } from "../actions";
+import { LOGIN_SUCCES, LOGIN_FAILED, LOGOUT_SUCCES } from "../actions";
 const user = (
   state = {
     front_name: "",
@@ -20,6 +20,14 @@ const user = (
     case LOGIN_FAILED:
       return Object.assign({}, state, {
         loginStatus: 2
+      });
+    case LOGOUT_SUCCES:
+      return Object.assign({}, state, {
+        front_name: "",
+        last_name: "",
+        email: "",
+        loggedIn: false,
+        loginStatus: 0
       });
     default:
       return state;
