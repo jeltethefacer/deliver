@@ -1,17 +1,27 @@
 const db = require("../../db");
+const hashing = require("../../hashing");
 
 module.exports = function(app) {
   app.post("/api/login", (req, respond) => {
     db.query(
-      "SELECT * FROM users WHERE email = $1 and password = $2",
-      [req.body.email, req.body.password],
+      "SELECT * FROM users WHERE email = $1",
+      [req.body.email],
       (err, res) => {
         if (err) {
           return req.next(err);
         }
         if (res.rows[0]) {
-          req.session.user = res.rows[0];
-          respond.json(res.rows[0]);
+          console.log(
+            hashing.checking(req.body.password, res.rows[0].salt),
+            res.rows[0].hash
+          );
+          var tempHash = hashing.checking(req.body.password, res.rows[0].salt);
+          if (tempHash.passwordHash == res.rows[0].hash) {
+            req.session.user = res.rows[0];
+            respond.json(res.rows[0]);
+          } else {
+            respond.sendStatus(401);
+          }
         } else {
           respond.sendStatus(401);
         }
