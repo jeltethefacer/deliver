@@ -4,14 +4,14 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const db = require("./db");
+const keys = require("./keys");
 
 const app = express();
 
 app.use(cookieParser());
 app.use(
   session({
-    secret:
-      "jemoederisaandepoederenjevaderaandespuitlekkerhoorgewerkisnietnodig",
+    secret: keys.COOKIE_KEY,
     cookie: { maxAge: 30 * 24 * 60 * 60 * 1000, secure: "auto" },
     proxy: true,
     resave: true,

@@ -1,11 +1,12 @@
 const { Pool } = require("pg");
+const keys = require("../keys");
 
 const pool = new Pool({
-  user: "pi",
-  host: "94.212.99.67",
-  database: "deliver_dev",
-  password: "raspberry",
-  port: 5432
+  user: keys.DB_USER,
+  host: keys.DB_HOST,
+  database: keys.DB_DB,
+  password: keys.DB_PASSWORD,
+  port: keys.DB_PORT
 });
 
 module.exports = {
