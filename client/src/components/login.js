@@ -1,8 +1,13 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import { login } from "../actions";
+import { login, checkIfLoggedIn } from "../actions";
 
 class Login extends Component {
+  componentDidMount() {
+    this.props.checkIfLoggedIn();
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -30,36 +35,47 @@ class Login extends Component {
   }
 
   render() {
-    return (
-      <form onSubmit={this.handleSubmit}>
-        <label>
-          email:
-          <input
-            type="text"
-            value={this.state.value}
-            onChange={this.handleChangeEmail}
-          />
-        </label>
-        <label>
-          password:
-          <input
-            type="password"
-            value={this.state.value}
-            onChange={this.handleChangePassword}
-          />
-        </label>
-        <input type="submit" value="Submit" />
-      </form>
-    );
+    if (this.props.loggedIn) {
+      return <Redirect to="/" />;
+    } else {
+      return (
+        <form onSubmit={this.handleSubmit}>
+          <label>
+            email:
+            <input
+              type="text"
+              value={this.state.value}
+              onChange={this.handleChangeEmail}
+            />
+          </label>
+          <label>
+            password:
+            <input
+              type="password"
+              value={this.state.value}
+              onChange={this.handleChangePassword}
+            />
+          </label>
+          <input type="submit" value="Submit" />
+        </form>
+      );
+    }
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    loggedIn: state.user.loggedIn
+  };
+};
+
 const mapDispatchToProps = dispatch => {
   return {
+    checkIfLoggedIn: () => dispatch(checkIfLoggedIn()),
     login: (username, password) => {
       dispatch(login(username, password));
     }
   };
 };
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

@@ -3,7 +3,8 @@ const user = (
   state = {
     front_name: "",
     last_name: "",
-    email: ""
+    email: "",
+    loggedIn: false
   },
   action
 ) => {
@@ -12,7 +13,8 @@ const user = (
       return Object.assign({}, state, {
         front_name: action.front_name,
         last_name: action.last_name,
-        email: action.email
+        email: action.email,
+        loggedIn: true
       });
     default:
       return state;

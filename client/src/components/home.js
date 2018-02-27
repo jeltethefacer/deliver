@@ -8,7 +8,7 @@ class App extends Component {
   }
 
   render() {
-    if (this.props.front_name) {
+    if (this.props.loggedIn) {
       return (
         <div>
           first name: {this.props.front_name}
@@ -22,6 +22,8 @@ class App extends Component {
       return (
         <div>
           <a href="/login">login</a>
+          <br />
+          <a href="/register">register</a>
         </div>
       );
     }
@@ -31,7 +33,9 @@ class App extends Component {
 const mapStateToProps = state => {
   return {
     front_name: state.user.front_name,
-    email: state.user.email
+    last_name: state.user.last_name,
+    email: state.user.email,
+    loggedIn: state.user.loggedIn
   };
 };
 
