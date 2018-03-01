@@ -3,6 +3,7 @@ const path = require("path");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
+const basicAuth = require("express-basic-auth");
 const db = require("./db");
 const keys = require("./keys");
 
@@ -24,9 +25,17 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, "client/build")));
 
+app.use(
+  basicAuth({
+    users: { geheim: "" }
+  })
+);
+
 // Put all login login in the login routes folder
 require("./routes/login")(app);
 require("./routes/create_user")(app);
+require("./routes/items")(app);
+require("./routes/payment")(app);
 
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.

@@ -11,7 +11,7 @@ module.exports = function(app) {
           return req.next(err);
         }
         if (res.rows[0]) {
-          respond.sendStatus(401);
+          respond.sendStatus(400);
         } else {
           hashed = hashing.hashing(req.body.password);
           db.query(
