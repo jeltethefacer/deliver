@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Link, Redirect } from "react-router-dom";
-import OrderCards from "./sub_components/order_card";
-import { getOrders, checkIfLoggedIn } from "../actions";
+import { Redirect } from "react-router-dom";
+import OrderCard from "./sub_components/order_card";
+import { getOrders, checkIfLoggedIn, getItems } from "../actions";
 
 class Orders extends Component {
   // constructor(props) {
@@ -10,6 +10,7 @@ class Orders extends Component {
   // }
   componentDidMount() {
     this.props.checkIfLoggedIn();
+    this.props.getItems();
     this.props.getOrders(this.props.user_id);
   }
 
@@ -17,12 +18,18 @@ class Orders extends Component {
     if (!this.props.loggedIn) {
       return <Redirect to="/" />;
     }
-    console.log(this.props.orders);
-    return (
-      <div>
-        <OrderCards orders={this.props.orders} />
-      </div>
-    );
+    console.log("hallo", this.props.items);
+    let orderList = this.props.orders.map((order, index) => {
+      return (
+        <OrderCard
+          order={order}
+          index={index}
+          items={this.props.items}
+          key={order.order.order_id}
+        />
+      );
+    });
+    return <div>{orderList}</div>;
   }
 }
 
@@ -30,14 +37,16 @@ const mapStateToProps = state => {
   return {
     loggedIn: state.user.loggedIn,
     user_id: state.user.user_id,
-    orders: state.orders.orders
+    orders: state.orders.orders,
+    items: state.items.items
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     checkIfLoggedIn: () => dispatch(checkIfLoggedIn()),
-    getOrders: user_id => dispatch(getOrders(user_id))
+    getOrders: user_id => dispatch(getOrders(user_id)),
+    getItems: () => dispatch(getItems())
   };
 };
 

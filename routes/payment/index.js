@@ -73,14 +73,11 @@ module.exports = function(app) {
             console.log(err);
           } else {
             var basketLength = req.body.basket.length;
+            order_id = res.rows[0].order_id;
             for (var i = 0; i < basketLength; i++) {
               db.query(
                 "INSERT INTO order_items(order_id, product_id, amount) values($1, $2, $3)",
-                [
-                  res.rows[0].order_id,
-                  req.body.basket[i].id,
-                  req.body.basket[i].amount
-                ],
+                [order_id, req.body.basket[i].id, req.body.basket[i].amount],
                 (err, res2) => {
                   if (err) {
                     console.log(err);
