@@ -6,6 +6,7 @@ import {
 } from "../actions";
 const user = (
   state = {
+    user_id: -1,
     front_name: "",
     last_name: "",
     email: "",
@@ -17,6 +18,7 @@ const user = (
   switch (action.type) {
     case LOGIN_SUCCES:
       return Object.assign({}, state, {
+        user_id: action.user_id,
         front_name: action.front_name,
         last_name: action.last_name,
         email: action.email,

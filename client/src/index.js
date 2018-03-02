@@ -6,6 +6,7 @@ import Register from "./components/register";
 import Logout from "./components/logout";
 import Items from "./components/items";
 import Checkout from "./components/checkout";
+import Orders from "./components/orders";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import { Provider } from "react-redux";
@@ -24,6 +25,7 @@ ReactDOM.render(
         <Route exact path="/logout" component={Logout} />
         <Route exact path="/Items" component={Items} />
         <Route exact path="/checkout" component={Checkout} />
+        <Route exact path="/orders" component={Orders} />
       </Switch>
     </Router>
   </Provider>,

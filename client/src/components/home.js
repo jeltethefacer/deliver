@@ -19,6 +19,8 @@ class App extends Component {
           <Link to="/logout">logout</Link>
           <br />
           <Link to="/items">items</Link>
+          <br />
+          <Link to="/orders">Orders</Link>
         </div>
       );
     } else {

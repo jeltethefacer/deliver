@@ -36,6 +36,7 @@ require("./routes/login")(app);
 require("./routes/create_user")(app);
 require("./routes/items")(app);
 require("./routes/payment")(app);
+require("./routes/orders")(app);
 
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.

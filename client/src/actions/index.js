@@ -12,9 +12,13 @@ export const ISSUERS_GET_SUCCES = "ISSUERS_GET_SUCCES";
 export const ISSUERS_GET_FAILED = "ISSUERS_GET_FAILED";
 export const CREATE_ORDER_SUCCES = "CREATE_ORDER_SUCCES";
 export const CREATE_ORDER_FAILED = "CREATE_ORDER_FAILED";
-export function loginSucces(front_name, last_name, email) {
+export const GET_ORDERS_FAILED = "GET_ORDERS_FAILED";
+export const GET_ORDERS_SUCCES = "GET_ORDERS_SUCCES";
+
+export function loginSucces(user_id, front_name, last_name, email) {
   return {
     type: LOGIN_SUCCES,
+    user_id,
     front_name,
     last_name,
     email
@@ -98,6 +102,19 @@ export function CreateOrderFailed() {
   };
 }
 
+export function getOrdersFailed() {
+  return {
+    type: GET_ORDERS_FAILED
+  };
+}
+
+export function getOrdersSucces(orders) {
+  return {
+    type: GET_ORDERS_SUCCES,
+    orders
+  };
+}
+
 export function login(email, password) {
   return function(dispatch) {
     return axios
@@ -118,6 +135,7 @@ export function login(email, password) {
         if (response.status === 200) {
           dispatch(
             loginSucces(
+              response.data.user_id,
               response.data.front_name,
               response.data.last_name,
               response.data.email
@@ -173,6 +191,7 @@ export function checkIfLoggedIn() {
         if (response.status === 200) {
           dispatch(
             loginSucces(
+              response.data.user_id,
               response.data.front_name,
               response.data.last_name,
               response.data.email
@@ -236,14 +255,16 @@ export function getIssuers() {
   };
 }
 
-export function createOrder(amount, issuer) {
+export function createOrder(amount, issuer, user_id, basket) {
   return function(dispatch) {
     return axios
       .post(
         "/api/payment",
         {
           amount: amount,
-          issuer: issuer
+          issuer: issuer,
+          user_id: user_id,
+          basket: basket
         },
         {
           auth: {
@@ -256,6 +277,26 @@ export function createOrder(amount, issuer) {
       })
       .catch(error => {
         dispatch(CreateOrderFailed());
+      });
+  };
+}
+
+export function getOrders(user_id) {
+  return function(dispatch) {
+    return axios
+      .get("/api/orders", {
+        params: {
+          user_id: user_id
+        },
+        auth: {
+          username: "geheim"
+        }
+      })
+      .then(response => {
+        dispatch(getOrdersSucces(response.data));
+      })
+      .catch(error => {
+        dispatch(getOrdersFailed());
       });
   };
 }
