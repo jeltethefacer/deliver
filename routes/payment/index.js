@@ -26,7 +26,7 @@ module.exports = function(app) {
       {
         amount: req.body.amount,
         description: "My first payment",
-        redirectUrl: "http://localhost:3000",
+        redirectUrl: "https://morning-journey-18064.herokuapp.com/",
         webhookUrl: "https://webshop.example.org/payments/webhook/",
         method: "ideal",
         issuer: req.body.issuer,
