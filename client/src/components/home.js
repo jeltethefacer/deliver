@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { checkIfLoggedIn } from "../actions";
+import { Button } from "semantic-ui-react";
+import NavBar from "./sub_components/navbar";
 
 class App extends Component {
   componentDidMount() {
@@ -9,29 +11,7 @@ class App extends Component {
   }
 
   render() {
-    if (this.props.loggedIn) {
-      return (
-        <div>
-          first name: {this.props.front_name}
-          <br />
-          email: {this.props.email}
-          <br />
-          <Link to="/logout">logout</Link>
-          <br />
-          <Link to="/items">items</Link>
-          <br />
-          <Link to="/orders">Orders</Link>
-        </div>
-      );
-    } else {
-      return (
-        <div>
-          <Link to="/login">login</Link>
-          <br />
-          <Link to="/register">register</Link>
-        </div>
-      );
-    }
+    return <NavBar />;
   }
 }
 

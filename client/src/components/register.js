@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { register, checkIfLoggedIn } from "../actions";
+import NavBar from "./sub_components/navbar";
 
 class Register extends Component {
   componentDidMount() {
@@ -123,6 +124,7 @@ class Register extends Component {
     }
     return (
       <div>
+        <NavBar />
         {warning}
         <form onSubmit={this.handleSubmit}>
           <div className="form-group">

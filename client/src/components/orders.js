@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import OrderCard from "./sub_components/order_card";
 import { getOrders, checkIfLoggedIn, getItems } from "../actions";
+import NavBar from "./sub_components/navbar";
 
 class Orders extends Component {
   // constructor(props) {
@@ -18,18 +19,24 @@ class Orders extends Component {
     if (!this.props.loggedIn) {
       return <Redirect to="/" />;
     }
-    console.log("hallo", this.props.items);
     let orderList = this.props.orders.map((order, index) => {
       return (
-        <OrderCard
-          order={order}
-          index={index}
-          items={this.props.items}
-          key={order.order.order_id}
-        />
+        <div>
+          <OrderCard
+            order={order}
+            index={index}
+            items={this.props.items}
+            key={order.order.order_id}
+          />
+        </div>
       );
     });
-    return <div>{orderList}</div>;
+    return (
+      <div>
+        <NavBar />
+        {orderList}
+      </div>
+    );
   }
 }
 

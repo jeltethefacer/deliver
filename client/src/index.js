@@ -9,6 +9,8 @@ import Checkout from "./components/checkout";
 import Orders from "./components/orders";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
+import Css from "./App.css";
+
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
 import thunkMiddleware from "redux-thunk";
@@ -23,7 +25,7 @@ ReactDOM.render(
         <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={Register} />
         <Route exact path="/logout" component={Logout} />
-        <Route exact path="/Items" component={Items} />
+        <Route exact path="/items" component={Items} />
         <Route exact path="/checkout" component={Checkout} />
         <Route exact path="/orders" component={Orders} />
       </Switch>

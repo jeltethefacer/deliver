@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
 import BasketCard from "./sub_components/basket";
+import { Card, Row, Col } from "antd";
 import { getItems, addItemBasket, checkIfLoggedIn } from "../actions";
+import NavBar from "./sub_components/navbar";
 
 class Items extends Component {
   // constructor(props) {
@@ -15,27 +17,29 @@ class Items extends Component {
 
   makeItemsCards(itemsList) {
     let returnValue = itemsList.map(items => (
-      <div className="card col-md-4" key={items.product_id}>
-        <h4 className="card-title">{items.name}</h4>
-        <p> &#8364; {items.price.toFixed(2)}</p>
-        <p className="card-text">{items.description}</p>
-        <button
-          type="button"
-          className="btn btn-primary"
-          onClick={e =>
-            this.props.addItemBasket(items.product_id, items.price, e)
-          }
-        >
-          product toevoegen.
-        </button>
-      </div>
+      <Col span={8}>
+        <Card key={items.product_id} title={items.name}>
+          <p> &#8364; {items.price.toFixed(2)}</p>
+          <p>{items.description}</p>
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={e =>
+              this.props.addItemBasket(items.product_id, items.price, e)
+            }
+          >
+            product toevoegen.
+          </button>
+        </Card>
+      </Col>
     ));
     return returnValue;
   }
   render() {
     let itemsList = "Loading";
-    if (!this.props.loggedIn) {
-      return <Redirect to="/" />;
+    let LoggedInMessage = <Link to="/login">Log in om te betalen</Link>;
+    if (this.props.loggedIn) {
+      LoggedInMessage = <Link to="/checkout">Betalen</Link>;
     }
     if (this.props.itemsStatus === 1) {
       itemsList = this.makeItemsCards(this.props.items);
@@ -43,7 +47,8 @@ class Items extends Component {
 
     return (
       <div>
-        <div className="row">{itemsList}</div>
+        <NavBar />
+        <Row gutter={16}>{itemsList}</Row>
         <div>
           <h2>winkelmandje: </h2>
           <BasketCard
@@ -52,7 +57,7 @@ class Items extends Component {
           />
         </div>
         <div>totaal: &#8364;{this.props.totalBasketPrice.toFixed(2)}</div>
-        <Link to="/checkout">Betalen</Link>
+        {LoggedInMessage}
       </div>
     );
   }

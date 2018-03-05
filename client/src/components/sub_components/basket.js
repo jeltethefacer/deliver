@@ -1,4 +1,5 @@
 import React from "react";
+import { Row, Col, Card } from "antd";
 
 //this function work only if the list has a product_id and a name propertie
 function getNameById(itemsList, id) {
@@ -14,16 +15,18 @@ function getNameById(itemsList, id) {
 function BasketCard(props) {
   let returnValue;
   const basketItems = props.basketItems;
-
   returnValue = basketItems.map(basketItem => (
-    <div className="row card" key={basketItem.id}>
-      <h4 className="card-text col-md-4">
-        {getNameById(props.items, basketItem.id)}
-      </h4>
-      <div className="card-text col-md-4">{basketItem.amount}</div>
-    </div>
+    <Row key={basketItem.id}>
+      <Col span={12}>
+        <h4>{getNameById(props.items, basketItem.id)}</h4>
+      </Col>
+      <Row span={12} className="card-text col-md-4">
+        {basketItem.amount}
+      </Row>
+    </Row>
   ));
-  return returnValue;
+
+  return <Card title="winkelwagentje">{returnValue}</Card>;
 }
 
 export default BasketCard;
