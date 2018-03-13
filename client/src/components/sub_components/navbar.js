@@ -17,7 +17,7 @@ class NavBar extends Component {
       rightNavbar = (
         <Menu.Menu position="right">
           <Menu.Item as={Link} to="/logout">
-            <Button color="red">logout</Button>
+            <Button negative>logout</Button>
           </Menu.Item>
         </Menu.Menu>
       );
@@ -46,6 +46,8 @@ class NavBar extends Component {
     return (
       <Menu color="yellow" inverted>
         <Menu.Item
+          as={Link}
+          to="/"
           name="home"
           active={activeItem === "home"}
           onClick={this.handleItemClick}

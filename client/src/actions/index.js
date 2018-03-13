@@ -14,6 +14,7 @@ export const CREATE_ORDER_SUCCES = "CREATE_ORDER_SUCCES";
 export const CREATE_ORDER_FAILED = "CREATE_ORDER_FAILED";
 export const GET_ORDERS_FAILED = "GET_ORDERS_FAILED";
 export const GET_ORDERS_SUCCES = "GET_ORDERS_SUCCES";
+export const CHANGE_PAGE = "CHANGE_PAGE";
 
 export function loginSucces(user_id, front_name, last_name, email) {
   return {
@@ -112,6 +113,13 @@ export function getOrdersSucces(orders) {
   return {
     type: GET_ORDERS_SUCCES,
     orders
+  };
+}
+
+export function changePage(page) {
+  return {
+    type: CHANGE_PAGE,
+    page
   };
 }
 

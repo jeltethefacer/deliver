@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import OrderCard from "./sub_components/order_card";
-import { getOrders, checkIfLoggedIn, getItems } from "../actions";
+import { getOrders, checkIfLoggedIn, getItems, changePage } from "../actions";
 import NavBar from "./sub_components/navbar";
 
 class Orders extends Component {
@@ -10,6 +10,7 @@ class Orders extends Component {
   //   super(props);
   // }
   componentDidMount() {
+    this.props.changePage("/orders");
     this.props.checkIfLoggedIn();
     this.props.getItems();
     this.props.getOrders(this.props.user_id);
@@ -53,7 +54,8 @@ const mapDispatchToProps = dispatch => {
   return {
     checkIfLoggedIn: () => dispatch(checkIfLoggedIn()),
     getOrders: user_id => dispatch(getOrders(user_id)),
-    getItems: () => dispatch(getItems())
+    getItems: () => dispatch(getItems()),
+    changePage: page => dispatch(changePage(page))
   };
 };
 

@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { checkIfLoggedIn } from "../actions";
+import { checkIfLoggedIn, changePage } from "../actions";
 import { Button } from "semantic-ui-react";
 import NavBar from "./sub_components/navbar";
 
 class App extends Component {
   componentDidMount() {
+    this.props.changePage("/");
     this.props.checkIfLoggedIn();
   }
 
@@ -26,7 +27,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    checkIfLoggedIn: () => dispatch(checkIfLoggedIn())
+    checkIfLoggedIn: () => dispatch(checkIfLoggedIn()),
+    changePage: page => dispatch(changePage(page))
   };
 };
 

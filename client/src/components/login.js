@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import { connect } from "react-redux";
+import { Button, Form, Message } from "semantic-ui-react";
 import { login, checkIfLoggedIn } from "../actions";
 
 class Login extends Component {
@@ -37,40 +38,49 @@ class Login extends Component {
   }
 
   render() {
-    let warning;
     if (this.props.loggedIn) {
-      return <Redirect to="/" />;
+      return <Redirect to={this.props.currentPage} />;
     }
+
+    let warning;
     if (this.props.loginStatus === 2) {
       warning = (
-        <div className="alert alert-danger">
-          <strong>waarschuwing!</strong> het wachtwoord of emailadres kloppen
-          niet
-        </div>
+        <Message
+          warning
+          header="waarschuwing"
+          content="Het wachtwoord of emailadres kloppen niet"
+        />
       );
     }
+
     return (
       <div>
         {warning}
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            email:
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Field>
+            <label>email: </label>
             <input
               type="text"
               value={this.state.value}
               onChange={this.handleChangeEmail}
             />
-          </label>
-          <label>
-            password:
+          </Form.Field>
+          <Form.Field>
+            <label>password:</label>
             <input
               type="password"
               value={this.state.value}
               onChange={this.handleChangePassword}
             />
-          </label>
-          <input type="submit" value="Submit" />
-        </form>
+          </Form.Field>
+
+          <Button type="submit" primary>
+            verstuur
+          </Button>
+          <Button as={Link} to={this.props.currentPage} negative>
+            annuleer
+          </Button>
+        </Form>
       </div>
     );
   }
@@ -79,7 +89,8 @@ class Login extends Component {
 const mapStateToProps = state => {
   return {
     loggedIn: state.user.loggedIn,
-    loginStatus: state.user.loginStatus
+    loginStatus: state.user.loginStatus,
+    currentPage: state.page.currentPage
   };
 };
 

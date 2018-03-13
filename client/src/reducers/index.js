@@ -5,12 +5,14 @@ import items from "./items";
 import basket from "./basket";
 import checkout from "./checkout";
 import orders from "./orders";
+import page from "./page";
 const deliverApp = combineReducers({
   register,
   user,
   items,
   basket,
   checkout,
-  orders
+  orders,
+  page
 });
 export default deliverApp;

@@ -2,8 +2,13 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
 import BasketCard from "./sub_components/basket";
-import { Card, Row, Col } from "antd";
-import { getItems, addItemBasket, checkIfLoggedIn } from "../actions";
+import { Card, Button, Icon, Grid, Image } from "semantic-ui-react";
+import {
+  getItems,
+  addItemBasket,
+  checkIfLoggedIn,
+  changePage
+} from "../actions";
 import NavBar from "./sub_components/navbar";
 
 class Items extends Component {
@@ -11,27 +16,39 @@ class Items extends Component {
   //   super(props);
   // }
   componentDidMount() {
+    this.props.changePage("/items");
     this.props.getItems();
     this.props.checkIfLoggedIn();
   }
 
   makeItemsCards(itemsList) {
     let returnValue = itemsList.map(items => (
-      <Col span={8}>
-        <Card key={items.product_id} title={items.name}>
-          <p> &#8364; {items.price.toFixed(2)}</p>
-          <p>{items.description}</p>
-          <button
-            type="button"
-            className="btn btn-primary"
-            onClick={e =>
-              this.props.addItemBasket(items.product_id, items.price, e)
-            }
-          >
-            product toevoegen.
-          </button>
-        </Card>
-      </Col>
+      <Card key={items.product_id}>
+        <Image
+          src={"/product_pics/" + items.product_id + ".png"}
+          alt={"/product_pics/" + items.product_id + ".jpg"}
+          heigth={100}
+        />
+        <Card.Content>
+          <Card.Header>{items.name}</Card.Header>
+          <Card.Meta>
+            <span className="date">&#8364; {items.price.toFixed(2)}</span>
+          </Card.Meta>
+          <Card.Description className="cardDescription">
+            {items.description}
+          </Card.Description>
+        </Card.Content>
+        <Button
+          primary
+          className="addToBasket"
+          onClick={e =>
+            this.props.addItemBasket(items.product_id, items.price, e)
+          }
+        >
+          <Icon name="shopping basket" />
+          product toevoegen.
+        </Button>
+      </Card>
     ));
     return returnValue;
   }
@@ -48,8 +65,8 @@ class Items extends Component {
     return (
       <div>
         <NavBar />
-        <Row gutter={16}>{itemsList}</Row>
-        <div>
+        <Card.Group>{itemsList}</Card.Group>
+        <div className="basket">
           <h2>winkelmandje: </h2>
           <BasketCard
             basketItems={this.props.basket}
@@ -77,7 +94,8 @@ const mapDispatchToProps = dispatch => {
   return {
     checkIfLoggedIn: () => dispatch(checkIfLoggedIn()),
     getItems: () => dispatch(getItems()),
-    addItemBasket: (id, price) => dispatch(addItemBasket(id, price))
+    addItemBasket: (id, price) => dispatch(addItemBasket(id, price)),
+    changePage: page => dispatch(changePage(page))
   };
 };
 
