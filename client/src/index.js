@@ -23,7 +23,6 @@ ReactDOM.render(
   <Provider store={store}>
     <Router>
       <Switch>
-        <Route path="/" component={Home} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={Register} />
         <Route exact path="/logout" component={Logout} />
@@ -31,6 +30,7 @@ ReactDOM.render(
         <Route exact path="/checkout" component={Checkout} />
         <Route exact path="/orders" component={Orders} />
         <Route exact path="/admin" component={Admin} />
+        <Route path="/" component={Home} />
       </Switch>
     </Router>
   </Provider>,
