@@ -23,14 +23,14 @@ ReactDOM.render(
   <Provider store={store}>
     <Router>
       <Switch>
-        <Route exact path="/" component={Home} />
+        <Route path="/" component={Home} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={Register} />
         <Route exact path="/logout" component={Logout} />
         <Route exact path="/items" component={Items} />
         <Route exact path="/checkout" component={Checkout} />
         <Route exact path="/orders" component={Orders} />
-        <Route exact path="/admin" component={Admin}/>
+        <Route exact path="/admin" component={Admin} />
       </Switch>
     </Router>
   </Provider>,

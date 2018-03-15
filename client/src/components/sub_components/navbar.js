@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {  Menu, Button } from "semantic-ui-react";
+import { Menu, Button } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { checkIfLoggedIn } from "../../actions";
