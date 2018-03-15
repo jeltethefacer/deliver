@@ -1,10 +1,11 @@
 import axios from "axios";
 export const LOGIN_SUCCES = "LOGIN_SUCCES";
 export const LOGIN_FAILED = "LOGIN_FAILED";
+export const NO_LOGIN = "NO_LOGIN";
+export const AWAITING_LOGIN = "AWAITING_LOGIN";
+export const LOGOUT_SUCCES = "LOGOUT_SUCCES";
 export const REGISTER_SUCCES = "REGISTER_SUCCES";
 export const REGISTER_FAILED = "REGISTER_FAILED";
-export const NO_LOGIN = "NO_LOGIN";
-export const LOGOUT_SUCCES = "LOGOUT_SUCCES";
 export const ITEMS_GET_SUCCES = "ITEMS_GET_SUCCES";
 export const ITEMS_GET_FAILED = "ITEMS_GET_FAILED";
 export const ADD_ITEM_BASKET = "ADD_ITEM_BASKET";
@@ -16,13 +17,14 @@ export const GET_ORDERS_FAILED = "GET_ORDERS_FAILED";
 export const GET_ORDERS_SUCCES = "GET_ORDERS_SUCCES";
 export const CHANGE_PAGE = "CHANGE_PAGE";
 
-export function loginSucces(user_id, front_name, last_name, email) {
+export function loginSucces(user_id, front_name, last_name, email, role) {
   return {
     type: LOGIN_SUCCES,
     user_id,
     front_name,
     last_name,
-    email
+    email,
+    role
   };
 }
 
@@ -35,6 +37,12 @@ export function loginFailed() {
 export function noLogin() {
   return {
     type: NO_LOGIN
+  };
+}
+
+export function awaitingLogin() {
+  return {
+    type: AWAITING_LOGIN
   };
 }
 
@@ -125,6 +133,7 @@ export function changePage(page) {
 
 export function login(email, password) {
   return function(dispatch) {
+    dispatch(awaitingLogin());
     return axios
       .post(
         "/api/login",
@@ -146,7 +155,8 @@ export function login(email, password) {
               response.data.user_id,
               response.data.front_name,
               response.data.last_name,
-              response.data.email
+              response.data.email,
+              response.data.role
             )
           );
         }
@@ -188,6 +198,7 @@ export function register(frontName, lastName, email, password) {
 
 export function checkIfLoggedIn() {
   return function(dispatch) {
+    dispatch(awaitingLogin());
     return axios
       .get("/api/user", {
         auth: {
@@ -202,7 +213,8 @@ export function checkIfLoggedIn() {
               response.data.user_id,
               response.data.front_name,
               response.data.last_name,
-              response.data.email
+              response.data.email,
+              response.data.role
             )
           );
         }

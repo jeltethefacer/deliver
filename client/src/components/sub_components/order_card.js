@@ -12,7 +12,7 @@ class OrderCard extends Component {
 
   makeItemsCards(items) {
     let returnValue = items.map(item => (
-      <tr>
+      <tr key={item.product_id}>
         <td>{this.getItemsName(this.props.items, item.product_id)}</td>
         <td>{item.amount}</td>
       </tr>
@@ -31,7 +31,6 @@ class OrderCard extends Component {
   }
 
   render() {
-    console.log(this.props.items);
     const order = this.props.order.order;
     const index = this.props.index;
     const order_items = this.props.order.order_items;

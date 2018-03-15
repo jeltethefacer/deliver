@@ -11,10 +11,6 @@ module.exports = function(app) {
           return req.next(err);
         }
         if (res.rows[0]) {
-          console.log(
-            hashing.checking(req.body.password, res.rows[0].salt),
-            res.rows[0].hash
-          );
           var tempHash = hashing.checking(req.body.password, res.rows[0].salt);
           if (tempHash.passwordHash == res.rows[0].hash) {
             req.session.user = res.rows[0];
@@ -31,7 +27,6 @@ module.exports = function(app) {
 
   app.get("/api/logout", (req, res) => {
     req.session.destroy();
-    console.log("loged out");
     res.sendStatus(200);
   });
   app.get("/api/user", (req, res) => {

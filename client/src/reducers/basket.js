@@ -18,7 +18,6 @@ const basket = (state = { items: [], totalPrice: 0 }, action) => {
       if (!alreadyInList) {
         tempState = [...tempState, { id: action.id, amount: 1 }];
       }
-      console.log(state.totalPrice, action.price, action.id);
       return Object.assign({}, state, {
         items: tempState,
         totalPrice: state.totalPrice + action.price

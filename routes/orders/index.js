@@ -25,6 +25,5 @@ router.get("/api/orders", async (req, respond) => {
       order_items: order_items.rows
     });
   }
-  console.log(respondList);
   respond.json(respondList);
 });

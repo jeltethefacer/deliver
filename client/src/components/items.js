@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import BasketCard from "./sub_components/basket";
-import { Card, Button, Icon, Grid, Image } from "semantic-ui-react";
+import { Card, Button, Icon, Image } from "semantic-ui-react";
 import {
   getItems,
   addItemBasket,
@@ -53,6 +53,10 @@ class Items extends Component {
     return returnValue;
   }
   render() {
+    if (this.props.loginStatus === 3) {
+      return <div>loading</div>;
+    }
+
     let itemsList = "Loading";
     let LoggedInMessage = <Link to="/login">Log in om te betalen</Link>;
     if (this.props.loggedIn) {
@@ -83,6 +87,7 @@ class Items extends Component {
 const mapStateToProps = state => {
   return {
     loggedIn: state.user.loggedIn,
+    loginStatus: state.user.loginStatus,
     itemsStatus: state.items.itemsStatus,
     items: state.items.items,
     basket: state.basket.items,

@@ -10,8 +10,9 @@ const user = (
     front_name: "",
     last_name: "",
     email: "",
+    role: "",
     loggedIn: false,
-    loginStatus: 0
+    loginStatus: 3
   },
   action
 ) => {
@@ -22,6 +23,8 @@ const user = (
         front_name: action.front_name,
         last_name: action.last_name,
         email: action.email,
+        role: action.role,
+        loginStatus: 1,
         loggedIn: true
       });
     case LOGIN_FAILED:
@@ -38,7 +41,8 @@ const user = (
       });
     case NO_LOGIN:
       return Object.assign({}, state, {
-        loggedIn: false
+        loggedIn: false,
+        loginStatus: 0
       });
     default:
       return state;

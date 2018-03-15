@@ -6,29 +6,35 @@ import { getOrders, checkIfLoggedIn, getItems, changePage } from "../actions";
 import NavBar from "./sub_components/navbar";
 
 class Orders extends Component {
-  // constructor(props) {
-  //   super(props);
-  // }
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      first_call: true
+    };
+  }
   componentDidMount() {
     this.props.changePage("/orders");
     this.props.checkIfLoggedIn();
     this.props.getItems();
-    this.props.getOrders(this.props.user_id);
   }
 
   render() {
+    if (this.props.loginStatus === 3) {
+      return <div>loading</div>;
+    }
     if (!this.props.loggedIn) {
       return <Redirect to="/" />;
     }
+    if (this.state.first_call) {
+      this.props.getOrders(this.props.user_id);
+      this.setState({ first_call: false });
+    }
+
     let orderList = this.props.orders.map((order, index) => {
       return (
-        <div>
-          <OrderCard
-            order={order}
-            index={index}
-            items={this.props.items}
-            key={order.order.order_id}
-          />
+        <div key={order.order.order_id}>
+          <OrderCard order={order} index={index} items={this.props.items} />
         </div>
       );
     });
@@ -44,6 +50,7 @@ class Orders extends Component {
 const mapStateToProps = state => {
   return {
     loggedIn: state.user.loggedIn,
+    loginStatus: state.user.loginStatus,
     user_id: state.user.user_id,
     orders: state.orders.orders,
     items: state.items.items

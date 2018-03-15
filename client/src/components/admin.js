@@ -1,19 +1,21 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 import { checkIfLoggedIn, changePage } from "../actions";
 import NavBar from "./sub_components/navbar";
 
-class App extends Component {
-  // constructor(props) {
-  //   super(props);
-  // }
-
+class Admin extends Component {
   componentDidMount() {
     this.props.changePage("/");
     this.props.checkIfLoggedIn();
   }
 
   render() {
+    if (this.props.loginStatus === 3) {
+      return <div>loading</div>;
+    } else if (this.props.role !== "admin") {
+      return <Redirect to="/" />;
+    }
     return <NavBar />;
   }
 }
@@ -24,8 +26,8 @@ const mapStateToProps = state => {
     last_name: state.user.last_name,
     email: state.user.email,
     role: state.user.role,
-    loginStatus: state.user.loginStatus,
-    loggedIn: state.user.loggedIn
+    loggedIn: state.user.loggedIn,
+    loginStatus: state.user.loginStatus
   };
 };
 
@@ -36,6 +38,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-const VisibleTodoList = connect(mapStateToProps, mapDispatchToProps)(App);
-
-export default VisibleTodoList;
+export default connect(mapStateToProps, mapDispatchToProps)(Admin);

@@ -13,7 +13,6 @@ class Items extends Component {
     this.props.checkIfLoggedIn();
     this.props.getIssuers();
     this.handleSubmit = this.handleSubmit.bind(this);
-    console.log(this.props.basket);
   }
 
   issuerOptions(issuerList) {
@@ -29,7 +28,6 @@ class Items extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    console.log(event.target.issuersSelect.value);
     this.props.createOrder(
       this.props.totalBasketPrice,
       event.target.issuersSelect.value,
@@ -39,6 +37,9 @@ class Items extends Component {
   }
 
   render() {
+    if (this.props.loginStatus === 3) {
+      return <div>loading</div>;
+    }
     if (!this.props.loggedIn) {
       return <Redirect to="/" />;
     }
@@ -47,7 +48,6 @@ class Items extends Component {
       issuerOptions = this.issuerOptions(this.props.issuers);
     }
     if (this.props.orderStatus === 1) {
-      console.log(this.props.order.links.paymentUrl);
       window.location = this.props.order.links.paymentUrl;
     }
     return (
@@ -76,6 +76,7 @@ const mapStateToProps = state => {
     user_id: state.user.user_id,
     itemsStatus: state.items.itemsStatus,
     orderStatus: state.checkout.orderStatus,
+    loginStatus: state.user.loginStatus,
     items: state.items.items,
     basket: state.basket.items,
     totalBasketPrice: state.basket.totalPrice,

@@ -7,8 +7,10 @@ import Logout from "./components/logout";
 import Items from "./components/items";
 import Checkout from "./components/checkout";
 import Orders from "./components/orders";
+import Admin from "./components/admin";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
+//eslint-disable-next-line
 import Css from "./App.css";
 
 import { Provider } from "react-redux";
@@ -28,6 +30,7 @@ ReactDOM.render(
         <Route exact path="/items" component={Items} />
         <Route exact path="/checkout" component={Checkout} />
         <Route exact path="/orders" component={Orders} />
+        <Route exact path="/admin" component={Admin}/>
       </Switch>
     </Router>
   </Provider>,
